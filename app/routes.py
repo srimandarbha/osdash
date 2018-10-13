@@ -16,7 +16,8 @@ def index():
 
 def nagios_check():
     alerts_dict={}
-    page = requests.get("http://nagiosro:eim7ca1He4he@10.243.8.62/nagios3/cgi-bin/status.cgi?host=all&servicestatustypes=16&hoststatustypes=15")
+    nagios_url="http://{}:{}@{}/cgi-bin/status.cgi?host=all&servicestatustypes=16&hoststatustypes=15".format(settings.NAGIOS_USER,settings.NAGIOS_PASS,settings.NAGIOS_URL)
+    page = requests.get(nagios_url)
     soup = BeautifulSoup(page.content, 'html.parser')
     ok_stats=soup.find('td',attrs={'class':'serviceTotalsOK'})
     unknown_stats=soup.find('td',attrs={'class':'serviceTotalsUNKNOWN'})
